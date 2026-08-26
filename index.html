@@ -306,6 +306,7 @@ section{padding:80px 0;position:relative;}
 .phone-3d{
   width:220px;height:450px;position:relative;
   transform-style:preserve-3d;cursor:grab;
+  touch-action: pan-y;
 }
 .phone-3d:active{cursor:grabbing;}
 .phone-face{
@@ -634,7 +635,7 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
       <p class="deck" data-hero>Focused on delivering engaging and seamless user experiences on Android and iOS platforms. Expertise in Dart, Clean Architecture, and high-performance cross-platform applications.</p>
       <div class="cover-ctas" data-hero>
         <a class="btn btn-primary" href="#projects">See the Projects</a>
-        <a class="btn btn-ghost" href="#contact">Summon</a>
+        <a class="btn btn-ghost" href="https://drive.google.com/file/d/1iGpGHtpbPb3-0fKKtIfZmaLjI00-jFWk/view?usp=sharing" target="_blank">View Resume</a>
       </div>
       <div class="terminal" data-hero>
         <div class="terminal-bar"><span></span><span></span><span></span></div>
@@ -1309,7 +1310,9 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
       end: 'bottom top',
       scrub: 1.5,
       onUpdate: self => {
-        scrollRotY = self.progress * 360;
+        // Invert logic: when progress is 0.5 (center of screen), rotation is 0 (front view)
+        // Scrolls out to -180 (back) and starts from 180 (back)
+        scrollRotY = (self.progress - 0.5) * -360;
         if (!isDragging) {
           gsap.set(mockup, { rotateY: scrollRotY + dragOffsetY, rotateX: tiltX });
         }
@@ -1336,7 +1339,7 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
       startDragOffset = dragOffsetY;
       mockup.setPointerCapture(e.pointerId);
       mockup.style.cursor = 'grabbing';
-      e.preventDefault();
+      // removed e.preventDefault() so touch-action: pan-y can handle native vertical scrolling
     });
 
     mockup.addEventListener('pointermove', e => {
