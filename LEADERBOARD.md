@@ -1,0 +1,9 @@
+# Global Bug Hunt leaderboard
+
+1. Create a free project at [Supabase](https://supabase.com/). In its SQL Editor, run the contents of `leaderboard.sql` once.
+2. In the Supabase dashboard, copy the **Project URL** (Project Settings / Data API or Connect dialog) and the **publishable key** (`sb_publishable_…`, Project Settings / API Keys). Set `url` and `publishableKey` in `leaderboard-config.js`. The URL must be `https://YOUR_PROJECT_REF.supabase.co`, **not** a `supabase.com/dashboard/project/...` link. **Never use a secret or `service_role` key in frontend files.**
+3. Deploy `index.html`, `game.js`, `game.css`, and `leaderboard-config.js` together. Open the site from two browsers/devices, submit a score, and switch between Classic and Speed Run. Each mode displays its worldwide top five.
+
+If the config is blank, Bug Hunt keeps using its existing device-only leaderboard. When configured, an unavailable API displays an error instead of pretending scores were saved; personal bests, badges, and daily progress remain on each device. Existing local leaderboard entries are **not** automatically uploaded (they cannot be verified).
+
+The publishable key is public by design; the SQL grants and Row Level Security policy restrict access to reading scores and inserting constrained rows. **This is a casual, player-submitted leaderboard, not cheat-proof.** Anyone can call a public API with a fabricated score or spam it. For a competitive board, use server-side gameplay/score validation plus rate limits and abuse protection (for example, a backend/Edge Function) rather than trusting the browser's `score` value. Review your Supabase usage and policies periodically; free-plan limits and inactivity rules can change.

@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Explore M S Karthik's Flutter projects, skills and experience — then play Bug Hunt, a comic-style build defense game.">
 <title>M S Karthik — Flutter Developer | Portfolio</title>
 <link rel="icon" type="image/png" href="favicon_cropped.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
@@ -23,11 +23,14 @@
   --cyan:#00E5FF;
   --yellow:#F5FF3D;
   --lime:#C6FF00;
+  --orange:#FF6B35;
+  --purple:#8250DF;
   --panel-shadow: 6px 6px 0 var(--ink);
   --panel-shadow-sm: 4px 4px 0 var(--ink);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
+::selection{background:var(--yellow);color:var(--ink);}
 body{
   background:var(--paper);
   background-image:radial-gradient(circle,rgba(10,10,10,0.08) 1px,transparent 1.3px);
@@ -36,6 +39,9 @@ body{
   font-family:'Work Sans',sans-serif;
   overflow-x:hidden;
 }
+::-webkit-scrollbar{width:12px;}
+::-webkit-scrollbar-track{background:var(--paper-dark);}
+::-webkit-scrollbar-thumb{background:var(--ink);border:3px solid var(--paper-dark);}
 h1,h2,h3,.shout{font-family:'Bangers',cursive;letter-spacing:1px;line-height:.95;}
 a{color:inherit;}
 img{max-width:100%;}
@@ -49,8 +55,8 @@ img{max-width:100%;}
    SCROLL PROGRESS
    ============================================ */
 .scroll-progress{
-  position:fixed;top:0;left:0;height:4px;width:0%;
-  background:linear-gradient(90deg,var(--pink),var(--cyan),var(--lime));
+  position:fixed;top:0;left:0;height:5px;width:0%;
+  background:linear-gradient(90deg,var(--pink),var(--orange),var(--yellow),var(--lime),var(--cyan));
   z-index:100;
 }
 
@@ -69,11 +75,16 @@ img{max-width:100%;}
 .topbar .brand{font-family:'Bangers';font-size:1.5rem;letter-spacing:1px;}
 .topbar .brand span{color:var(--yellow);}
 .topbar nav{display:flex;gap:22px;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
-.topbar nav a{text-decoration:none;opacity:.85;transition:opacity .15s,color .15s;}
+.topbar nav a{text-decoration:none;opacity:.85;transition:opacity .15s,color .15s;position:relative;}
+.topbar nav a::after{content:"";position:absolute;left:0;bottom:-6px;height:3px;width:0;background:var(--yellow);transition:width .2s;}
 .topbar nav a:hover{opacity:1;color:var(--yellow);}
+.topbar nav a:hover::after{width:100%;}
 .topbar nav a:focus-visible{outline:2px solid var(--yellow);outline-offset:3px;}
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;}
 .hamburger span{display:block;width:24px;height:3px;background:var(--paper);margin:4px 0;border-radius:2px;transition:transform .3s,opacity .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 .mobile-nav{
   display:none;position:fixed;top:56px;left:0;right:0;
   background:var(--ink);border-bottom:4px solid var(--pink);
@@ -88,7 +99,7 @@ img{max-width:100%;}
    HERO / COVER
    ============================================ */
 .cover{
-  position:relative;padding:70px 20px 90px;overflow:hidden;
+  position:relative;padding:80px 20px 100px;overflow:hidden;
   background:var(--ink);color:var(--paper);border-bottom:6px solid var(--pink);
 }
 .cover::before{
@@ -96,15 +107,20 @@ img{max-width:100%;}
   background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 2px,transparent 2px 14px);
   pointer-events:none;
 }
-.cover-inner{max-width:1180px;margin:0 auto;position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;}
+.cover::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 82% 18%,rgba(255,47,160,.22),transparent 42%),
+             radial-gradient(circle at 12% 85%,rgba(0,229,255,.14),transparent 40%);
+}
+.cover-inner{max-width:1180px;margin:0 auto;position:relative;z-index:2;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;}
 .issue-tag{
   display:inline-block;background:var(--pink);color:var(--paper);
   font-family:'Bangers';font-size:.95rem;letter-spacing:2px;
   padding:6px 14px;transform:rotate(-3deg);
-  border:3px solid var(--ink);box-shadow:var(--panel-shadow-sm);margin-bottom:22px;
+  border:3px solid var(--paper);box-shadow:var(--panel-shadow-sm);margin-bottom:22px;
 }
 .cover h1{font-size:clamp(3rem,8vw,5.6rem);color:var(--paper);text-shadow:4px 4px 0 var(--ink);}
-.cover h1 .accent{color:var(--yellow);text-shadow:4px 4px 0 var(--ink);}
+.cover h1 .accent{color:var(--yellow);text-shadow:4px 4px 0 var(--pink);}
 .cover .sub{
   margin-top:18px;font-family:'Bangers';font-size:clamp(1.1rem,2.4vw,1.6rem);
   color:var(--ink);background:var(--yellow);display:inline-block;
@@ -115,22 +131,44 @@ img{max-width:100%;}
 .btn{
   font-family:'Bangers';letter-spacing:1px;font-size:1.05rem;
   padding:12px 22px;border:3px solid var(--ink);cursor:pointer;
-  text-decoration:none;display:inline-block;
-  box-shadow:var(--panel-shadow-sm);transition:transform .12s ease;
+  text-decoration:none;display:inline-block;position:relative;overflow:hidden;
+  box-shadow:var(--panel-shadow-sm);transition:transform .12s ease,box-shadow .12s ease;
 }
-.btn:hover{transform:translate(-2px,-2px);}
+.btn::after{
+  content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(115deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-20deg);transition:left .4s ease;
+}
+.btn:hover::after{left:130%;}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
 .btn:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .btn-primary{background:var(--pink);color:var(--paper);}
 .btn-ghost{background:var(--paper);color:var(--ink);}
+.btn-lime{background:var(--lime);color:var(--ink);}
 
-/* burst */
-.burst{
-  width:min(360px,80vw);aspect-ratio:1;background:var(--yellow);
-  clip-path:polygon(50% 0%,61% 35%,96% 24%,74% 52%,100% 74%,65% 70%,55% 100%,44% 68%,12% 90%,28% 58%,0% 40%,36% 40%);
+/* hero right disc */
+.hero-right{display:flex;align-items:center;justify-content:center;position:relative;min-height:320px;}
+.hero-disc{
+  position:relative;width:min(360px,78vw);aspect-ratio:1;
+  background:radial-gradient(circle,rgba(10,10,10,.14) 1.5px,transparent 2px);
+  background-size:12px 12px;background-color:var(--yellow);
+  border:6px solid var(--paper);border-radius:50%;
+  box-shadow:10px 10px 0 var(--pink),10px 10px 0 3px var(--paper);
   display:flex;align-items:center;justify-content:center;
-  border:4px solid var(--ink);filter:drop-shadow(6px 6px 0 var(--ink));
+  transform:rotate(-4deg);
 }
-.burst svg{width:56%;height:56%;}
+.hero-disc::before{
+  content:"";position:absolute;inset:14px;border:3px dashed var(--ink);border-radius:50%;
+}
+.hero-disc img{width:64%;border-radius:12px;transform:rotate(3deg);}
+.float-word{
+  position:absolute;font-family:'Bangers';letter-spacing:2px;
+  padding:4px 12px;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+  font-size:1rem;white-space:nowrap;
+}
+.fw-1{top:-8px;right:-4px;background:var(--pink);color:var(--paper);transform:rotate(8deg);}
+.fw-2{bottom:14px;left:-18px;background:var(--cyan);color:var(--ink);transform:rotate(-9deg);}
+.fw-3{top:44%;right:-30px;background:var(--lime);color:var(--ink);transform:rotate(5deg);}
 
 /* terminal */
 .terminal{
@@ -155,10 +193,19 @@ img{max-width:100%;}
   background:var(--pink);border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);
   overflow:hidden;white-space:nowrap;padding:12px 0;
 }
-.ticker-track{display:inline-flex;}
+.ticker-track{display:inline-flex;will-change:transform;}
 .ticker-track span{
   font-family:'Bangers';font-size:1.1rem;letter-spacing:1px;color:var(--ink);
   padding:0 22px;display:inline-flex;align-items:center;gap:22px;
+}
+
+/* ============================================
+   PANEL GUTTER (comic separation)
+   ============================================ */
+.gutter{
+  height:12px;margin:0 auto;max-width:1180px;
+  background:repeating-linear-gradient(-45deg,var(--ink) 0 14px,transparent 14px 28px);
+  border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
 }
 
 /* ============================================
@@ -193,7 +240,12 @@ section{padding:80px 0;position:relative;}
 .about-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:26px;align-items:stretch;}
 .about-art{
   background:var(--cyan);border:4px solid var(--ink);box-shadow:var(--panel-shadow);
-  display:flex;align-items:center;justify-content:center;padding:30px;min-height:280px;
+  display:flex;align-items:center;justify-content:center;padding:30px;min-height:280px;position:relative;overflow:hidden;
+}
+.about-art::after{
+  content:"POW!";position:absolute;top:12px;right:12px;font-family:'Bangers';
+  background:var(--yellow);border:3px solid var(--ink);padding:4px 12px;
+  transform:rotate(8deg);box-shadow:3px 3px 0 var(--ink);font-size:1rem;
 }
 .about-art svg{width:100%;max-width:280px;}
 .about-text p{margin-bottom:14px;line-height:1.7;font-size:1.02rem;}
@@ -203,7 +255,9 @@ section{padding:80px 0;position:relative;}
   display:flex;align-items:center;gap:8px;background:var(--paper);
   border:3px solid var(--ink);box-shadow:var(--panel-shadow-sm);
   padding:8px 14px;font-family:'Bangers';font-size:.88rem;letter-spacing:.5px;
+  transition:transform .15s ease,box-shadow .15s ease;
 }
+.about-fact:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
 .about-fact .dot{width:10px;height:10px;border:2px solid var(--ink);border-radius:50%;}
 .about-fact:nth-child(1) .dot{background:var(--pink);}
 .about-fact:nth-child(2) .dot{background:var(--lime);}
@@ -218,21 +272,18 @@ section{padding:80px 0;position:relative;}
   background:var(--ink);transform:translateX(-50%);
   transform-origin:top;border-radius:3px;
 }
-.timeline-entry{
-  position:relative;width:45%;margin-bottom:50px;
-}
+.timeline-entry{position:relative;width:45%;margin-bottom:50px;}
 .timeline-entry:nth-child(odd){margin-left:5%;}
 .timeline-entry:nth-child(even){margin-left:50%;}
-.timeline-entry .panel{padding:22px 24px;}
+.timeline-entry .panel{padding:22px 24px;transition:transform .15s ease,box-shadow .15s ease;}
+.timeline-entry .panel:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--ink);}
 .timeline-dot{
   position:absolute;top:28px;width:22px;height:22px;
   border:4px solid var(--ink);border-radius:50%;z-index:2;
 }
 .timeline-entry:nth-child(odd) .timeline-dot{right:-36px;background:var(--pink);}
 .timeline-entry:nth-child(even) .timeline-dot{left:-36px;background:var(--lime);}
-.timeline-date{
-  font-family:'Bangers';font-size:.88rem;letter-spacing:1px;color:var(--pink);margin-bottom:4px;
-}
+.timeline-date{font-family:'Bangers';font-size:.88rem;letter-spacing:1px;color:var(--pink);margin-bottom:4px;}
 .timeline-role{font-family:'Bangers';font-size:1.3rem;letter-spacing:.5px;margin-bottom:2px;}
 .timeline-company{font-family:'Kalam';font-weight:700;font-size:.9rem;color:#666;margin-bottom:8px;}
 .timeline-desc{font-size:.92rem;line-height:1.55;color:#3A3A3A;}
@@ -261,6 +312,13 @@ section{padding:80px 0;position:relative;}
   display:flex;flex-direction:column;align-items:center;height:100%;
 }
 .power:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink);}
+.power::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--pc,var(--pink));}
+.power:nth-child(1){--pc:var(--pink);}
+.power:nth-child(2){--pc:var(--lime);}
+.power:nth-child(3){--pc:var(--cyan);}
+.power:nth-child(4){--pc:var(--yellow);}
+.power:nth-child(5){--pc:var(--orange);}
+.power:nth-child(6){--pc:var(--purple);}
 .power::after{
   content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
   background:linear-gradient(115deg,transparent,rgba(255,255,255,.55),transparent);
@@ -278,64 +336,90 @@ section{padding:80px 0;position:relative;}
 .power p{font-size:.8rem;color:#3A3A3A;font-family:'Work Sans';flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0;}
 
 /* ============================================
+   BUG HUNT GAME
+   ============================================ */
+.game-wrap{
+  position:relative;border:4px solid var(--ink);box-shadow:var(--panel-shadow);
+  background:#0F0F14;overflow:hidden;
+}
+#bugCanvas{display:block;width:100%;height:540px;touch-action:none;cursor:crosshair;}
+.hud{
+  position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;
+  padding:12px 14px;pointer-events:none;z-index:5;gap:8px;flex-wrap:wrap;
+}
+.hud-group{display:flex;gap:8px;flex-wrap:wrap;}
+.hud-chip{
+  background:var(--paper);border:3px solid var(--ink);box-shadow:var(--panel-shadow-sm);
+  padding:5px 12px;font-family:'Bangers';letter-spacing:1px;font-size:.95rem;
+  display:flex;align-items:center;gap:6px;
+}
+.hud-chip .lbl{font-size:.65rem;opacity:.6;letter-spacing:2px;}
+.hud-chip .heart{color:var(--pink);font-size:1.05rem;letter-spacing:2px;}
+.hud-chip .combo-hot{color:var(--pink);animation:comboPulse .5s ease infinite alternate;}
+@keyframes comboPulse{to{transform:scale(1.15);}}
+.mute-btn{pointer-events:auto;cursor:pointer;transition:transform .12s;}
+.mute-btn:hover{transform:translate(-2px,-2px);background:var(--yellow);}
+.game-overlay{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;background:rgba(10,10,10,.88);z-index:10;text-align:center;padding:24px;
+}
+.game-overlay.hidden{display:none;}
+.game-title{
+  font-family:'Bangers';font-size:clamp(2.6rem,7vw,4.6rem);color:var(--yellow);
+  text-shadow:4px 4px 0 var(--pink),8px 8px 0 var(--ink);line-height:.95;transform:rotate(-2deg);
+}
+.game-title.small{font-size:clamp(2rem,5vw,3.4rem);}
+.game-sub{font-family:'Kalam';font-weight:700;color:#EAEAEA;max-width:52ch;font-size:1rem;line-height:1.6;}
+.game-sub b{background:var(--yellow);color:var(--ink);padding:0 5px;border:2px solid var(--ink);}
+.game-legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.legend-item{display:flex;align-items:center;gap:7px;font-family:'Bangers';font-size:.82rem;letter-spacing:1px;color:#CCC;}
+.legend-swatch{width:16px;height:16px;border-radius:50%;border:3px solid var(--paper);}
+.game-best{font-family:'Bangers';letter-spacing:2px;color:var(--cyan);font-size:1rem;}
+.game-stats-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.game-stat{background:var(--paper);border:3px solid var(--ink);box-shadow:var(--panel-shadow-sm);padding:10px 18px;font-family:'Bangers';letter-spacing:1px;min-width:110px;}
+.game-stat .v{font-size:1.6rem;color:var(--pink);}
+.game-stat .k{font-size:.65rem;letter-spacing:2px;opacity:.6;}
+.shake{animation:shakeX .4s ease;}
+@keyframes shakeX{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}
+</style>
+<style>
+/* ============================================
    PROJECTS & 3D MOCKUPS
    ============================================ */
-.project-row{
-  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
-  margin-bottom:70px;padding:30px 0;
-}
+.project-row{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:70px;padding:30px 0;}
 .project-row:nth-child(even){direction:rtl;}
 .project-row:nth-child(even)>*{direction:ltr;}
 .project-info .stamp{
-  display:inline-block;background:transparent;color:var(--ink);
+  background:transparent;color:var(--ink);
   border:3px solid var(--ink);border-radius:50%;width:64px;height:64px;
   font-family:'Bangers';font-size:.62rem;letter-spacing:.5px;
   transform:rotate(-14deg);line-height:1;text-align:center;
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:14px;
+  margin-bottom:14px;transition:transform .2s ease;
 }
+.project-info:hover .stamp{transform:rotate(4deg) scale(1.08);}
 .project-info h3{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:10px;}
 .project-info p{font-size:.95rem;line-height:1.6;color:#3A3A3A;margin-bottom:16px;}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
-.tag{font-size:.72rem;font-weight:700;background:var(--ink);color:var(--paper);padding:3px 8px;}
+.tag{font-size:.72rem;font-weight:700;background:var(--ink);color:var(--paper);padding:3px 8px;transition:background .15s;}
+.tag:hover{background:var(--pink);}
 
 /* 3D Phone Mockup */
-.mockup-scene{
-  perspective:1200px;display:flex;flex-direction:column;align-items:center;gap:12px;
-}
-.phone-3d{
-  width:220px;height:450px;position:relative;
-  transform-style:preserve-3d;cursor:grab;
-  touch-action: pan-y;
-}
+.mockup-scene{perspective:1200px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.phone-3d{width:220px;height:450px;position:relative;transform-style:preserve-3d;cursor:grab;touch-action:pan-y;}
 .phone-3d:active{cursor:grabbing;}
-.phone-face{
-  position:absolute;inset:0;
-  backface-visibility:hidden;
-  border-radius:28px;border:4px solid var(--ink);
-  overflow:hidden;
-}
+.phone-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:28px;border:4px solid var(--ink);overflow:hidden;}
 .phone-front{background:var(--ink);padding:10px;}
 .phone-rear{transform:rotateY(180deg);}
-.phone-screen{
-  background:var(--paper);width:100%;height:100%;border-radius:18px;
-  overflow:hidden;display:flex;flex-direction:column;position:relative;
-}
-.phone-appbar{
-  border-bottom:3px solid var(--ink);height:36px;display:flex;align-items:center;
-  justify-content:space-between;padding:0 14px;
-  font-family:'Bangers';font-size:.75rem;letter-spacing:.5px;
-}
+.phone-screen{background:var(--paper);width:100%;height:100%;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;position:relative;}
+.phone-appbar{border-bottom:3px solid var(--ink);height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-family:'Bangers';font-size:.75rem;letter-spacing:.5px;}
 .phone-appbar .ico{width:14px;height:14px;border:2px solid var(--ink);border-radius:50%;}
 .phone-body{flex:1;padding:10px;display:flex;flex-direction:column;gap:8px;overflow:hidden;}
-.phone-nav{
-  height:32px;border-top:3px solid var(--ink);display:flex;
-}
+.phone-nav{height:32px;border-top:3px solid var(--ink);display:flex;}
 .phone-nav span{flex:1;display:flex;align-items:center;justify-content:center;}
 .phone-nav span i{width:8px;height:8px;background:var(--ink);display:block;border-radius:2px;}
 .phone-nav span.active i{background:var(--pink);border-radius:50%;}
 
-/* project-specific phone colors */
 .project-row:nth-child(1) .phone-front{box-shadow:6px 6px 0 var(--pink);}
 .project-row:nth-child(1) .phone-appbar{background:var(--pink);}
 .project-row:nth-child(2) .phone-front{box-shadow:6px 6px 0 var(--lime);}
@@ -345,92 +429,59 @@ section{padding:80px 0;position:relative;}
 .project-row:nth-child(4) .phone-front{box-shadow:6px 6px 0 var(--yellow);}
 .project-row:nth-child(4) .phone-appbar{background:var(--yellow);}
 
-/* phone back design */
-.phone-back{
-  width:100%;height:100%;border-radius:24px;display:flex;
-  flex-direction:column;align-items:center;justify-content:center;gap:12px;
-  position:relative;overflow:hidden;
-}
-.phone-back::before{
-  content:"";position:absolute;inset:0;
-  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0 2px,transparent 2px 12px);
-  pointer-events:none;
-}
+.phone-back{width:100%;height:100%;border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden;}
+.phone-back::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0 2px,transparent 2px 12px);pointer-events:none;}
 .phone-back.back-pink{background:var(--pink);}
 .phone-back.back-lime{background:var(--lime);}
 .phone-back.back-cyan{background:var(--cyan);}
 .phone-back.back-yellow{background:var(--yellow);}
-
-.phone-cam{
-  width:40px;height:40px;border-radius:50%;border:4px solid var(--ink);
-  background:rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;
-  position:absolute;top:30px;
-}
+.phone-cam{width:40px;height:40px;border-radius:50%;border:4px solid var(--ink);background:rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;position:absolute;top:30px;}
 .phone-cam::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--ink);}
-.phone-back-logo{
-  font-family:'Bangers';font-size:1.1rem;letter-spacing:2px;color:var(--ink);
-  background:var(--yellow);padding:6px 14px;border:3px solid var(--ink);
-  transform:rotate(-3deg);
-}
-.phone-back-text{
-  font-family:'Kalam';font-weight:700;font-size:.78rem;color:var(--ink);opacity:.8;
-}
+.phone-back-logo{font-family:'Bangers';font-size:1.1rem;letter-spacing:2px;color:var(--ink);background:var(--yellow);padding:6px 14px;border:3px solid var(--ink);transform:rotate(-3deg);}
+.phone-back-text{font-family:'Kalam';font-weight:700;font-size:.78rem;color:var(--ink);opacity:.8;}
 
-/* -----------------------
-   PHONE UI SPECIFIC STYLES
-   ----------------------- */
+.phone-geo-circle{position:absolute;top:15%;left:10%;width:80%;aspect-ratio:1;border:2px dashed var(--pink);border-radius:50%;background:rgba(255,47,160,0.15);}
+.phone-geo-pin{position:absolute;top:48%;left:48%;width:10px;height:10px;background:var(--ink);border-radius:50%;}
+.phone-alarm-card{background:var(--paper-dark);border:2px solid var(--ink);padding:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.phone-alarm-card .time{font-family:'Bangers';font-size:.9rem;letter-spacing:0.5px;}
+.phone-alarm-card .meta{font-size:0.55rem;font-weight:700;color:#555;font-family:'Work Sans';}
+.phone-alarm-card .toggle{width:28px;height:14px;background:var(--lime);border:2px solid var(--ink);border-radius:7px;position:relative;}
+.phone-alarm-card .toggle::after{content:"";position:absolute;right:1px;top:1px;width:8px;height:8px;background:var(--ink);border-radius:50%;}
+.phone-alarm-card .toggle.off{background:var(--paper);}
+.phone-alarm-card .toggle.off::after{left:1px;right:auto;}
 
-/* Wake Me Up */
-.phone-geo-circle { position:absolute; top:15%; left:10%; width:80%; aspect-ratio:1; border:2px dashed var(--pink); border-radius:50%; background:rgba(255,47,160,0.15); }
-.phone-geo-pin { position:absolute; top:48%; left:48%; width:10px; height:10px; background:var(--ink); border-radius:50%; }
-.phone-alarm-card { background:var(--paper-dark); border:2px solid var(--ink); padding:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
-.phone-alarm-card .time { font-family:'Bangers'; font-size:.9rem; letter-spacing:0.5px; }
-.phone-alarm-card .meta { font-size:0.55rem; font-weight:700; color:#555; font-family:'Work Sans'; }
-.phone-alarm-card .toggle { width:28px; height:14px; background:var(--lime); border:2px solid var(--ink); border-radius:7px; position:relative; }
-.phone-alarm-card .toggle::after { content:""; position:absolute; right:1px; top:1px; width:8px; height:8px; background:var(--ink); border-radius:50%; }
-.phone-alarm-card .toggle.off { background:var(--paper); }
-.phone-alarm-card .toggle.off::after { left:1px; right:auto; }
-
-/* CE Transportation / Map */
-.phone-map{ flex:1;background:#E8E8E8;border:2px solid var(--ink);position:relative;overflow:hidden;margin-bottom:6px; }
+.phone-map{flex:1;background:#E8E8E8;border:2px solid var(--ink);position:relative;overflow:hidden;margin-bottom:6px;}
 .phone-map-road{position:absolute;background:var(--paper-dark);border:1px solid #ccc;}
 .phone-map-road.h{height:3px;width:80%;top:40%;left:10%;}
 .phone-map-road.v{width:3px;height:70%;left:55%;top:15%;}
-.phone-map-pin{ position:absolute;top:35%;left:52%;width:14px;height:14px;background:var(--pink);border:2px solid var(--ink);border-radius:50% 50% 50% 0;transform:rotate(-45deg); }
-.phone-driver{ height:28px;background:var(--paper);border:2px solid var(--ink);display:flex;align-items:center;gap:5px;padding:0 6px;font-size:.55rem;font-weight:700;margin-bottom:4px; }
+.phone-map-pin{position:absolute;top:35%;left:52%;width:14px;height:14px;background:var(--pink);border:2px solid var(--ink);border-radius:50% 50% 50% 0;transform:rotate(-45deg);}
+.phone-driver{height:28px;background:var(--paper);border:2px solid var(--ink);display:flex;align-items:center;gap:5px;padding:0 6px;font-size:.55rem;font-weight:700;margin-bottom:4px;}
 .phone-driver .status{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink);}
 .phone-driver .status.on{background:var(--lime);}
 .phone-driver .status.off{background:var(--paper-dark);}
 .phone-driver .ln{height:5px;flex:1;background:var(--ink);opacity:.15;}
 
-/* Campus Enlight / Modules Grid */
-.phone-modules { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px; flex:1; }
-.phone-module { background:var(--paper-dark); border:2px solid var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-family:'Bangers'; font-size:.65rem; padding:10px 0;}
-.phone-module .icon { width:20px; height:20px; border-radius:50%; border:2px solid var(--ink); }
-.phone-module:nth-child(1) .icon { background:var(--pink); }
-.phone-module:nth-child(2) .icon { background:var(--lime); }
-.phone-module:nth-child(3) .icon { background:var(--cyan); }
-.phone-module:nth-child(4) .icon { background:var(--yellow); }
-.phone-list-item { background:var(--paper); border:2px solid var(--ink); padding:4px 6px; font-size:.55rem; font-weight:700; margin-bottom:4px; display:flex; gap:6px; align-items:center; }
-.phone-list-item .dot { width:8px; height:8px; background:var(--ink); border-radius:50%; }
+.phone-modules{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;flex:1;}
+.phone-module{background:var(--paper-dark);border:2px solid var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-family:'Bangers';font-size:.65rem;padding:10px 0;}
+.phone-module .icon{width:20px;height:20px;border-radius:50%;border:2px solid var(--ink);}
+.phone-module:nth-child(1) .icon{background:var(--pink);}
+.phone-module:nth-child(2) .icon{background:var(--lime);}
+.phone-module:nth-child(3) .icon{background:var(--cyan);}
+.phone-module:nth-child(4) .icon{background:var(--yellow);}
+.phone-list-item{background:var(--paper);border:2px solid var(--ink);padding:4px 6px;font-size:.55rem;font-weight:700;margin-bottom:4px;display:flex;gap:6px;align-items:center;}
+.phone-list-item .dot{width:8px;height:8px;background:var(--ink);border-radius:50%;}
 
-/* ZapStore / Products */
-.phone-search{ height:24px;background:var(--paper-dark);border:2px solid var(--ink);border-radius:12px;margin-bottom:4px; }
+.phone-search{height:24px;background:var(--paper-dark);border:2px solid var(--ink);border-radius:12px;margin-bottom:4px;}
 .phone-products{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;}
-.phone-product{ border:2px solid var(--ink);display:flex;flex-direction:column;overflow:hidden; }
+.phone-product{border:2px solid var(--ink);display:flex;flex-direction:column;overflow:hidden;}
 .phone-product-img{flex:1;min-height:40px;}
 .phone-product-img.c1{background:var(--pink);}
 .phone-product-img.c2{background:var(--lime);}
 .phone-product-img.c3{background:var(--cyan);}
 .phone-product-img.c4{background:var(--yellow);}
-.phone-product-price{ font-family:'Bangers';font-size:.55rem;padding:2px 4px;border-top:2px solid var(--ink);background:var(--paper); }
+.phone-product-price{font-family:'Bangers';font-size:.55rem;padding:2px 4px;border-top:2px solid var(--ink);background:var(--paper);}
 
-
-/* mockup hint */
-.mockup-hint{
-  font-family:'Kalam';font-size:.75rem;font-weight:700;color:#888;
-  display:flex;align-items:center;gap:6px;
-}
+.mockup-hint{font-family:'Kalam';font-size:.75rem;font-weight:700;color:#888;display:flex;align-items:center;gap:6px;}
 .mockup-hint svg{width:16px;height:16px;animation:spinHint 3s linear infinite;}
 @keyframes spinHint{to{transform:rotate(360deg);}}
 @media(prefers-reduced-motion:reduce){.mockup-hint svg{animation:none;}}
@@ -439,28 +490,16 @@ section{padding:80px 0;position:relative;}
    FEATURED (OSS & WRITING)
    ============================================ */
 .featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:30px;}
-.feature-card{
-  display:flex;flex-direction:column;text-decoration:none;color:var(--ink);
-  transition:transform 0.15s ease, box-shadow 0.15s ease;
-  padding:30px;
-}
+.feature-card{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);transition:transform 0.15s ease, box-shadow 0.15s ease;padding:30px;}
 .feature-card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--ink);}
-.feature-card.pr-card{border-top:6px solid #8250DF;}
+.feature-card.pr-card{border-top:6px solid var(--purple);}
 .feature-card.medium-card{border-top:6px solid var(--ink);}
-.feature-badge{
-  display:inline-block;padding:6px 14px;font-family:'Bangers';letter-spacing:1px;
-  font-size:0.95rem;border:3px solid var(--ink);margin-bottom:18px;align-self:flex-start;
-  box-shadow:var(--panel-shadow-sm);transform:rotate(-2deg);
-}
-.feature-badge.merged{background:#8250DF;color:var(--paper);}
+.feature-badge{display:inline-block;padding:6px 14px;font-family:'Bangers';letter-spacing:1px;font-size:0.95rem;border:3px solid var(--ink);margin-bottom:18px;align-self:flex-start;box-shadow:var(--panel-shadow-sm);transform:rotate(-2deg);}
+.feature-badge.merged{background:var(--purple);color:var(--paper);}
 .feature-badge.medium{background:var(--yellow);color:var(--ink);}
 .feature-card h3{font-size:clamp(1.6rem, 3vw, 2.2rem);margin-bottom:12px;line-height:1.1;}
 .feature-card p{font-size:1.05rem;line-height:1.6;color:#3A3A3A;flex-grow:1;margin-bottom:0;}
-.feature-link{
-  margin-top:24px;font-family:'Bangers';font-size:1.2rem;
-  display:flex;align-items:center;justify-content:space-between;
-  border-top:3px dashed #CCC;padding-top:16px;transition:border-color 0.2s;
-}
+.feature-link{margin-top:24px;font-family:'Bangers';font-size:1.2rem;display:flex;align-items:center;justify-content:space-between;border-top:3px dashed #CCC;padding-top:16px;transition:border-color 0.2s;}
 .feature-card:hover .feature-link{border-color:var(--ink);}
 
 /* ============================================
@@ -473,12 +512,9 @@ section{padding:80px 0;position:relative;}
   transition:transform .15s ease,box-shadow .15s ease;
   display:flex;flex-direction:column;align-items:center;height:100%;
 }
-.achievement:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--ink);}
-.achievement-icon{
-  width:64px;height:64px;margin:0 auto 12px;border-radius:50%;
-  border:4px solid var(--ink);display:flex;align-items:center;justify-content:center;
-  font-size:1.6rem;
-}
+.achievement:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:8px 8px 0 var(--ink);}
+.achievement-icon{width:64px;height:64px;margin:0 auto 12px;border-radius:50%;border:4px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.6rem;transition:transform .25s ease;}
+.achievement:hover .achievement-icon{transform:scale(1.15) rotate(-8deg);}
 .achievement:nth-child(1) .achievement-icon{background:var(--pink);}
 .achievement:nth-child(2) .achievement-icon{background:var(--yellow);}
 .achievement:nth-child(3) .achievement-icon{background:var(--lime);}
@@ -489,10 +525,7 @@ section{padding:80px 0;position:relative;}
 /* ============================================
    STATS STRIP
    ============================================ */
-.stats-strip{
-  background:var(--ink);color:var(--paper);
-  border-top:4px solid var(--pink);border-bottom:4px solid var(--pink);padding:50px 0;
-}
+.stats-strip{background:var(--ink);color:var(--paper);border-top:4px solid var(--pink);border-bottom:4px solid var(--pink);padding:50px 0;}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;}
 .stat .num{font-family:'Bangers';font-size:clamp(2.2rem,5vw,3.4rem);color:var(--yellow);}
 .stat .label{font-family:'Kalam';font-weight:700;font-size:.85rem;margin-top:4px;letter-spacing:.5px;}
@@ -514,11 +547,16 @@ section{padding:80px 0;position:relative;}
 .social-card:nth-child(4):hover{background:var(--pink);color:var(--paper);}
 .social-card svg{width:32px;height:32px;margin-bottom:8px;}
 .social-card h3{font-family:'Bangers';font-size:1rem;letter-spacing:.5px;margin-bottom:2px;}
-.social-card span{font-family:'Kalam';font-size:.78rem;font-weight:700;opacity:.7;flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0;}
+.social-card span{font-family:'Kalam';font-size:.78rem;font-weight:700;opacity:.7;flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0;word-break:break-all;}
 
 .contact-panel{
   background:var(--pink);color:var(--paper);border:4px solid var(--ink);
-  box-shadow:var(--panel-shadow);padding:50px 40px;text-align:center;position:relative;
+  box-shadow:var(--panel-shadow);padding:50px 40px;text-align:center;position:relative;overflow:hidden;
+}
+.contact-panel::before{
+  content:"ZAP!";position:absolute;top:16px;right:20px;font-family:'Bangers';
+  background:var(--yellow);color:var(--ink);border:3px solid var(--ink);
+  padding:4px 14px;transform:rotate(9deg);box-shadow:3px 3px 0 var(--ink);font-size:1rem;
 }
 .contact-panel h2{font-size:clamp(2.2rem,6vw,3.6rem);color:var(--paper);text-shadow:3px 3px 0 var(--ink);margin-bottom:14px;}
 .contact-panel p{font-family:'Kalam';font-weight:700;font-size:1.1rem;max-width:50ch;margin:0 auto 26px;}
@@ -541,29 +579,21 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   opacity:0; pointer-events:none; transform:translateY(20px) rotate(-45deg);
   transition:background 0.2s, box-shadow 0.2s, transform 0.4s cubic-bezier(.2,.8,.2,1.2), opacity 0.4s;
 }
-.go-top.show {
-  opacity:1; pointer-events:auto; transform:translateY(0) rotate(0deg);
-}
-.go-top:hover {
-  background:var(--yellow); transform:translateY(-4px) rotate(0deg); box-shadow:7px 7px 0 var(--ink);
-}
-.go-top:active {
-  transform:translateY(2px) rotate(0deg); box-shadow:2px 2px 0 var(--ink);
-}
-.go-top-ring {
-  position:absolute; inset:4px; border:2.5px dashed var(--ink); border-radius:50%;
-  animation:spinRing 6s linear infinite; pointer-events:none;
-}
-.go-top svg { width:24px; height:24px; color:var(--ink); position:relative; z-index:2; transition:transform 0.2s; }
-.go-top:hover svg { transform:translateY(-3px); }
-@keyframes spinRing { to { transform:rotate(360deg); } }
-@media(prefers-reduced-motion:reduce){ .go-top-ring { animation:none; } }
+.go-top.show{opacity:1; pointer-events:auto; transform:translateY(0) rotate(0deg);}
+.go-top:hover{background:var(--yellow); transform:translateY(-4px) rotate(0deg); box-shadow:7px 7px 0 var(--ink);}
+.go-top:active{transform:translateY(2px) rotate(0deg); box-shadow:2px 2px 0 var(--ink);}
+.go-top-ring{position:absolute; inset:4px; border:2.5px dashed var(--ink); border-radius:50%;animation:spinRing 6s linear infinite; pointer-events:none;}
+.go-top svg{width:24px; height:24px; color:var(--ink); position:relative; z-index:2; transition:transform 0.2s;}
+.go-top:hover svg{transform:translateY(-3px);}
+@keyframes spinRing{to{transform:rotate(360deg);}}
+@media(prefers-reduced-motion:reduce){.go-top-ring{animation:none;}}
 
 /* ============================================
    RESPONSIVE
    ============================================ */
 @media(max-width:900px){
   .cover-inner{grid-template-columns:1fr;text-align:left;}
+  .hero-right{order:-1;min-height:260px;}
   .about-grid{grid-template-columns:1fr;}
   .project-row{grid-template-columns:1fr !important;gap:30px;}
   .project-row:nth-child(even){direction:ltr;}
@@ -579,6 +609,7 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   .timeline-line{left:8%;}
   .timeline-entry:nth-child(odd) .timeline-dot,
   .timeline-entry:nth-child(even) .timeline-dot{left:-30px;right:auto;}
+  #bugCanvas{height:460px;}
 }
 @media(max-width:560px){
   .powers-grid{grid-template-columns:1fr;}
@@ -586,8 +617,11 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   .social-grid{grid-template-columns:1fr;}
   .stats-grid{grid-template-columns:repeat(2,1fr);}
   .phone-3d{width:180px;height:370px;}
+  #bugCanvas{height:400px;}
+  .gutter{margin:0 10px;}
 }
 </style>
+<link rel="stylesheet" href="game.css">
 </head>
 <body>
 
@@ -606,6 +640,7 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
       <a href="#projects">Projects</a>
       <a href="#featured">Featured</a>
       <a href="#achievements">Achievements</a>
+      <a href="#game">Play</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
@@ -620,6 +655,7 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   <a href="#projects">Projects</a>
   <a href="#featured">Featured</a>
   <a href="#achievements">Achievements</a>
+  <a href="#game">Play</a>
   <a href="#contact">Contact</a>
 </div>
 
@@ -635,11 +671,22 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
       <p class="deck" data-hero>Focused on delivering engaging and seamless user experiences on Android and iOS platforms. Expertise in Dart, Clean Architecture, and high-performance cross-platform applications.</p>
       <div class="cover-ctas" data-hero>
         <a class="btn btn-primary" href="#projects">See the Projects</a>
+        <a class="btn btn-lime" href="#game">▶ Play Bug Hunt <span class="cta-mini">/ BONUS STAGE</span></a>
         <a class="btn btn-ghost" href="https://drive.google.com/file/d/1iGpGHtpbPb3-0fKKtIfZmaLjI00-jFWk/view?usp=sharing" target="_blank">View Resume</a>
       </div>
+      <div class="hero-meta" data-hero><span><b>01 /</b> FLUTTER ENGINEER</span><span><b>02 /</b> CREATIVE BUILDER</span><span><b>03 /</b> BUG HUNTER</span></div>
       <div class="terminal" data-hero>
         <div class="terminal-bar"><span></span><span></span><span></span></div>
         <div class="terminal-body" id="terminalBody"></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-disc">
+        <img src="favicon_cropped.png" alt="MSK — M S Karthik logo">
+        <span class="float-word fw-1">POW!</span>
+        <span class="float-word fw-2">ZAP!</span>
+        <span class="float-word fw-3">BAM!</span>
+        <span class="disc-orbit" aria-hidden="true">✳</span>
       </div>
     </div>
   </div>
@@ -687,6 +734,8 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   </div>
 </section>
 
+<div class="gutter" aria-hidden="true"></div>
+
 <!-- ============================================
      EXPERIENCE TIMELINE
      ============================================ -->
@@ -728,6 +777,8 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   </div>
 </section>
 
+<div class="gutter" aria-hidden="true"></div>
+
 <!-- ============================================
      POWERS (SKILLS)
      ============================================ -->
@@ -768,11 +819,13 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
     </div>
     <div class="power">
       <div class="hex-icon"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16" stroke="#0A0A0A" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-      <h3>Widgets &amp; UI</h3> 
+      <h3>Widgets &amp; UI</h3>
       <p>Complex layouts, Custom Painter, and buttery-smooth animations</p>
     </div>
   </div>
 </section>
+
+<div class="gutter" aria-hidden="true"></div>
 
 <!-- ============================================
      PROJECTS WITH 3D MOCKUPS
@@ -792,7 +845,6 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
     </div>
     <div class="mockup-scene">
       <div class="phone-3d" data-mockup>
-        <!-- Front -->
         <div class="phone-face phone-front">
           <div class="phone-screen">
             <div class="phone-appbar">WAKE ME UP<span class="ico"></span></div>
@@ -802,24 +854,17 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
                  <div class="phone-geo-pin"></div>
               </div>
               <div class="phone-alarm-card">
-                 <div>
-                   <div class="time">ENTRY ALARM</div>
-                   <div class="meta">Radius: 500m</div>
-                 </div>
+                 <div><div class="time">ENTRY ALARM</div><div class="meta">Radius: 500m</div></div>
                  <div class="toggle"></div>
               </div>
               <div class="phone-alarm-card">
-                 <div>
-                   <div class="time">EXIT ALARM</div>
-                   <div class="meta">Radius: 2.5km</div>
-                 </div>
+                 <div><div class="time">EXIT ALARM</div><div class="meta">Radius: 2.5km</div></div>
                  <div class="toggle off"></div>
               </div>
             </div>
             <div class="phone-nav"><span class="active"><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
           </div>
         </div>
-        <!-- Back -->
         <div class="phone-face phone-rear">
           <div class="phone-back back-pink">
             <div class="phone-cam"></div>
@@ -962,6 +1007,8 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
 
 </section>
 
+<div class="gutter" aria-hidden="true"></div>
+
 <!-- ============================================
      FEATURED (OSS & WRITING)
      ============================================ -->
@@ -969,14 +1016,12 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   <div class="kicker">Chapter 5</div>
   <h2 class="section-title">Open Source & Publications</h2>
   <div class="featured-grid">
-     <!-- PR Card -->
      <a href="https://github.com/flutter/packages/pull/12560" target="_blank" class="feature-card panel pr-card">
         <div class="feature-badge merged">MERGED PR</div>
         <h3>Official Flutter Framework Contributor</h3>
         <p>Successfully merged a Pull Request to the official <code>flutter/packages</code> repository, specifically contributing to Material UI components.</p>
         <div class="feature-link">View Pull Request #12560 <span>→</span></div>
      </a>
-     <!-- Article Card -->
      <a href="https://karthimanisindhu.medium.com/native-biometric-authentication-in-flutter-for-android-no-third-party-packages-84a1415ca285" target="_blank" class="feature-card panel medium-card">
         <div class="feature-badge medium">ARTICLE</div>
         <h3>Native Biometric Auth in Flutter</h3>
@@ -985,6 +1030,8 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
      </a>
   </div>
 </section>
+
+<div class="gutter" aria-hidden="true"></div>
 
 <!-- ============================================
      ACHIEVEMENTS
@@ -1032,10 +1079,92 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   </div>
 </div>
 
+<div class="page">
+
+<!-- ============================================
+     BUG HUNT — COMIC MINI GAME
+     ============================================ -->
+<section id="game">
+  <div class="kicker">Bonus Level</div>
+  <h2 class="section-title">Bug Hunt <span class="arcade-title-accent">/ Save the Build!</span></h2>
+  <div class="arcade-intro"><div><span class="arcade-eyebrow">THE INTERACTIVE ISSUE / 01</span><p>One build. Three hearts. A whole lot of bugs. Got what it takes to ship?</p></div><span class="arcade-sticker">✦ PLAYABLE PORTFOLIO</span></div>
+  <div class="game-wrap" id="gameWrap">
+    <canvas id="bugCanvas" tabindex="0" aria-label="Bug Hunt game arena. Click or drag across bugs and pickups before bugs reach the build. Press Space to zap the nearest bug."></canvas>
+    <div class="arena-label" aria-hidden="true"><span class="live-dot"></span> LIVE / BUILD DEFENSE <span id="waveLabel">WAVE 01</span></div>
+
+    <div class="hud">
+      <div class="hud-group">
+        <div class="hud-chip"><span class="lbl">SCORE</span><span id="hudScore">0</span></div>
+        <div class="hud-chip"><span class="lbl">TIME</span><span id="hudTime">45</span></div>
+        <div class="hud-chip"><span class="lbl">STREAK</span><span id="hudCombo">x1</span></div>
+      </div>
+      <div class="hud-group">
+        <div class="hud-chip"><span class="lbl">LIVES</span><span class="heart" id="hudLives">♥♥♥</span></div>
+        <div class="hud-chip shield-chip" id="shieldChip" hidden><span class="lbl">SHIELD</span><span>ON</span></div>
+        <button class="hud-chip pause-btn" id="pauseBtn" aria-label="Pause game" title="Pause game (P)">PAUSE</button>
+        <button class="hud-chip mute-btn" id="muteBtn" aria-label="Toggle sound">🔊</button>
+      </div>
+    </div>
+
+    <div class="game-overlay" id="startOverlay">
+      <div class="arcade-menu">
+      <span class="menu-kicker">THE MINI GAME / BUILD DEFENSE</span>
+      <div class="game-title">BUG&nbsp;HUNT!</div>
+      <div class="arcade-menu-subtitle">THE BUILD DEFENSE ARCADE <span>✳</span> ISSUE #01</div>
+      <p class="game-sub">Bugs are closing in on your <b>production build</b>. Tap or swipe them away, chain hits for up to 5× points, and hold the line until the clock runs out.</p>
+      <div class="game-legend">
+        <div class="legend-item"><span class="legend-swatch" style="background:#C6FF00"></span>GRUNT · 1 HIT</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#FF2FA0"></span>SPEEDER · FAST</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#FF6B35"></span>TANK · 2 HITS</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#8250DF"></span>GLITCH BOSS · 4 HITS</div>
+      </div>
+      <button class="btn btn-lime" id="startBtn">▶ START MISSION</button>
+      <div class="mode-picker" role="group" aria-label="Choose a game mode">
+        <button type="button" class="mode-option" data-mode="classic" aria-pressed="true">CLASSIC <span>45 seconds · 3 lives</span></button>
+        <button type="button" class="mode-option" data-mode="sprint" aria-pressed="false">SPEED RUN <span>30 seconds · faster bugs</span></button>
+      </div>
+      <div class="game-best" id="bestStart">BEST SCORE: 0</div>
+      </div>
+    </div>
+
+    <div class="game-overlay hidden" id="pauseOverlay">
+      <div class="arcade-menu"><span class="menu-kicker">TAKE A BREATHER</span><div class="game-title small">MISSION PAUSED</div>
+      <p class="game-sub">Your build is safe for now. Ready to jump back in?</p>
+      <div class="arcade-actions"><button class="btn btn-lime" id="resumeBtn">RESUME MISSION</button><button class="btn btn-ghost" id="quitBtn">END RUN</button></div>
+      <p class="menu-tip">Press P or Escape to resume</p></div>
+    </div>
+
+    <div class="game-overlay hidden" id="overOverlay">
+      <div class="arcade-menu"><span class="menu-kicker">MISSION REPORT</span>
+      <div class="game-title small" id="overTitle">BUILD SAVED!</div>
+      <div class="game-stats-row">
+        <div class="game-stat"><div class="v" id="finalScore">0</div><div class="k">SCORE</div></div>
+        <div class="game-stat"><div class="v" id="finalKills">0</div><div class="k">BUGS SQUASHED</div></div>
+        <div class="game-stat"><div class="v" id="finalBest">0</div><div class="k">BEST</div></div>
+      </div>
+      <p class="game-sub" id="overQuip">The build compiles. The bugs? History.</p>
+      <div class="arcade-actions"><button class="btn btn-lime" id="restartBtn">PLAY AGAIN</button><button class="btn btn-ghost" id="shareBtn">SHARE SCORE</button></div>
+      <form class="arcade-name" id="scoreForm"><label for="playerName">CLAIM YOUR SPOT ON THE BOARD</label><input id="playerName" name="playerName" maxlength="16" autocomplete="nickname" placeholder="Your hero name" required><button class="btn btn-primary" type="submit" id="saveScoreBtn">SAVE MY SCORE</button></form>
+      <p class="arcade-status" id="gameStatus" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+  <div class="arcade-bottom">
+    <div class="arcade-howto"><span class="arcade-eyebrow">FIELD MANUAL / HOW TO PLAY</span><h3>Squash. Chain. Survive.</h3><p>Tap or drag across bugs before they reach your build. Keep a streak for up to 5× points. Orange tanks take two hits; a purple glitch boss appears each wave. Collect glowing pickups for bonus time, a one-hit shield or a screen-clearing pulse!</p><div class="arcade-key">MOUSE / TOUCH <span>to squash</span> &nbsp; SPACE <span>to zap nearest bug when arena is focused</span> &nbsp; P / ESC <span>to pause</span> &nbsp; M <span>to mute</span></div></div>
+    <div class="arcade-board"><div class="board-heading"><div><span class="arcade-eyebrow">HALL OF FAME</span><h3>Hall of heroes</h3></div><span class="board-icon">TOP 05</span></div><div class="board-mode" id="boardMode">CLASSIC / 45S</div><ol id="leaderboard" aria-label="Top scores"></ol><p class="board-note" id="boardNote">This is a device-only leaderboard, not a global ranking. Switch modes to see each board; share a challenge link with a friend!</p></div>
+  </div>
+  <div class="arcade-extras"><div class="arcade-extra"><span class="arcade-eyebrow">YOUR MISSION</span><strong id="missionText">Squash 20 bugs in one run</strong><span id="missionProgress">0 / 20 squashed</span><div class="mission-track"><span id="missionFill"></span></div></div><div class="arcade-extra daily-extra"><span class="arcade-eyebrow">DAILY CONTRACT / RESETS AT MIDNIGHT</span><strong>Squash 30 bugs today</strong><span id="dailyProgress">0 / 30 across all runs</span><div class="mission-track"><span id="dailyFill"></span></div><span class="daily-reward">REWARD / DAILY DEFENDER BADGE</span></div><div class="arcade-extra badge-extra"><span class="arcade-eyebrow">BADGE CABINET</span><div id="badgeList" class="badge-list" aria-label="Unlockable achievements"></div></div></div>
+  <p class="mockup-hint" style="margin-top:14px;justify-content:center;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11.5a3 3 0 1 1 6 0V17H9v-5.5Z"/><path d="M12 3v3M4.5 12H7M17 12h2.5M6.6 6.6l1.8 1.8M15.6 8.4l1.8-1.8"/></svg>
+    Tip: drag across the screen to squash bugs rapid-fire · Works with mouse &amp; touch
+  </p>
+</section>
+
+<div class="gutter" aria-hidden="true"></div>
+
 <!-- ============================================
      CONTACT
      ============================================ -->
-<div class="page">
   <section id="contact">
     <div class="kicker">Final Chapter</div>
     <h2 class="section-title">Connect With Me</h2>
@@ -1050,11 +1179,6 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>
         <h3>LinkedIn</h3>
         <span>/in/mskarthik2001</span>
-      </a>
-      <a class="social-card" href="https://mskarthik.online" target="_blank">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-        <h3>Website</h3>
-        <span>mskarthik.online</span>
       </a>
       <a class="social-card" href="mailto:karthimanisindhu@gmail.com">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z"/><path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z"/></svg>
@@ -1077,76 +1201,65 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
 
 <footer>— END OF ISSUE #01 · TO BE CONTINUED —</footer>
 
-<!-- ============================================
-     GO TO TOP
-     ============================================ -->
 <button class="go-top" id="goTopBtn" aria-label="Back to top">
   <div class="go-top-ring"></div>
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
-<!-- ============================================
-     SCRIPTS — GSAP ANIMATIONS
-     ============================================ -->
 <script>
 (function(){
   'use strict';
-
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   gsap.registerPlugin(ScrollTrigger);
 
-  // ==========================================
-  // HAMBURGER MENU
-  // ==========================================
+  /* ============ HAMBURGER ============ */
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const mobileNav = document.getElementById('mobileNav');
   hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('open');
     mobileNav.classList.toggle('open');
   });
   mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mobileNav.classList.remove('open'));
+    a.addEventListener('click', () => { mobileNav.classList.remove('open'); hamburgerBtn.classList.remove('open'); });
   });
 
-  // ==========================================
-  // SCROLL PROGRESS (GSAP)
-  // ==========================================
+  /* ============ SCROLL PROGRESS ============ */
   gsap.to('.scroll-progress', {
-    width: '100%',
-    ease: 'none',
-    scrollTrigger: {
-      trigger: document.documentElement,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.3
-    }
+    width: '100%', ease: 'none',
+    scrollTrigger: { trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 0.3 }
   });
 
-  // ==========================================
-  // HERO ENTRANCE TIMELINE
-  // ==========================================
+  /* ============ HERO ENTRANCE ============ */
   if (!reduceMotion) {
     const heroEls = gsap.utils.toArray('[data-hero]');
     const heroTl = gsap.timeline({ defaults: { ease: 'back.out(1.7)', duration: 0.7 } });
-
     gsap.set(heroEls, { opacity: 0, y: 30 });
-    gsap.set('.burst', { opacity: 0, scale: 0.4, rotation: -40 });
-
+    gsap.set('.hero-disc', { opacity: 0, scale: 0.4, rotation: -30 });
+    gsap.set('.float-word', { opacity: 0, scale: 0 });
     heroTl
-      .to(heroEls[0], { opacity: 1, y: 0, duration: 0.5 }, 0.1)       // issue tag
-      .to(heroEls[1], { opacity: 1, y: 0, duration: 0.8 }, 0.2)       // h1
-      .to(heroEls[2], { opacity: 1, y: 0, scale: 1, rotation: 1.5, duration: 0.6 }, 0.4) // sub
-      .to(heroEls[3], { opacity: 1, y: 0, duration: 0.5 }, 0.55)      // deck
-      .to(heroEls[4], { opacity: 1, y: 0, duration: 0.5 }, 0.7)       // ctas
-      .to(heroEls[5], { opacity: 1, y: 0, duration: 0.6 }, 0.8)       // terminal
-      .to('.burst', {
-        opacity: 1, scale: 1, rotation: 0,
-        duration: 0.9, ease: 'elastic.out(1, 0.5)'
-      }, 0.3);
+      .to(heroEls[0], { opacity: 1, y: 0, duration: 0.5 }, 0.1)
+      .to(heroEls[1], { opacity: 1, y: 0, duration: 0.8 }, 0.2)
+      .to(heroEls[2], { opacity: 1, y: 0, scale: 1, rotation: 1.5, duration: 0.6 }, 0.4)
+      .to(heroEls[3], { opacity: 1, y: 0, duration: 0.5 }, 0.55)
+      .to(heroEls[4], { opacity: 1, y: 0, duration: 0.5 }, 0.7)
+      .to(heroEls[5], { opacity: 1, y: 0, duration: 0.6 }, 0.8)
+      .to(heroEls[6], { opacity: 1, y: 0, duration: 0.6 }, 0.9)
+      .to('.hero-disc', { opacity: 1, scale: 1, rotation: -4, duration: 1, ease: 'elastic.out(1, 0.5)' }, 0.35)
+      .to('.float-word', { opacity: 1, scale: 1, duration: 0.5, stagger: 0.12, ease: 'back.out(2.5)' }, 0.9);
+    // gentle float on comic words
+    gsap.utils.toArray('.float-word').forEach((w, i) => {
+      gsap.to(w, { y: (i % 2 ? 10 : -10), rotation: '+=4', duration: 1.8 + i * 0.4, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    });
+    // hero parallax on mouse
+    const cover = document.querySelector('.cover');
+    cover.addEventListener('mousemove', e => {
+      const rx = (e.clientX / window.innerWidth - 0.5);
+      const ry = (e.clientY / window.innerHeight - 0.5);
+      gsap.to('.hero-disc', { x: rx * 18, y: ry * 14, duration: 0.6, ease: 'power2.out' });
+    });
   }
 
-  // ==========================================
-  // TERMINAL TYPING (unchanged)
-  // ==========================================
+  /* ============ TERMINAL TYPING ============ */
   const terminalBody = document.getElementById('terminalBody');
   const terminalLines = [
     { text: '$ flutter run', cls: '' },
@@ -1155,176 +1268,93 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
   ];
   function typeTerminal() {
     if (reduceMotion) {
-      terminalBody.innerHTML = terminalLines.map(l => `<div class="${l.cls}">${l.text}</div>`).join('');
+      terminalBody.innerHTML = terminalLines.map(l => '<div class="' + l.cls + '">' + l.text + '</div>').join('');
       return;
     }
     let li = 0, ci = 0;
     terminalBody.innerHTML = '<div><span class="cursor"></span></div>';
-    function step() {
+    (function step() {
       if (li >= terminalLines.length) return;
       const line = terminalLines[li];
-      const current = line.text.slice(0, ci);
       terminalBody.innerHTML =
-        terminalLines.slice(0, li).map(l => `<div class="${l.cls}">${l.text}</div>`).join('') +
-        `<div class="${line.cls}">${current}<span class="cursor"></span></div>`;
+        terminalLines.slice(0, li).map(l => '<div class="' + l.cls + '">' + l.text + '</div>').join('') +
+        '<div class="' + line.cls + '">' + line.text.slice(0, ci) + '<span class="cursor"></span></div>';
       ci++;
       if (ci <= line.text.length) { setTimeout(step, 22); }
       else { li++; ci = 0; setTimeout(step, 260); }
-    }
-    step();
+    })();
   }
   setTimeout(typeTerminal, 900);
 
-  // ==========================================
-  // TICKER (GSAP marquee)
-  // ==========================================
-  const tickerTrack = document.getElementById('tickerTrack');
-  if (!reduceMotion) {
-    gsap.to(tickerTrack, {
-      xPercent: -50,
-      repeat: -1,
-      duration: 18,
-      ease: 'none'
-    });
-  } else {
-    gsap.to(tickerTrack, {
-      xPercent: -50,
-      repeat: -1,
-      duration: 60,
-      ease: 'none'
-    });
-  }
+  /* ============ TICKER ============ */
+  gsap.to('#tickerTrack', {
+    xPercent: -50, repeat: -1,
+    duration: reduceMotion ? 60 : 18, ease: 'none'
+  });
 
-  // ==========================================
-  // SECTION TITLE & KICKER REVEALS
-  // ==========================================
+  /* ============ SECTION REVEALS ============ */
   gsap.utils.toArray('.kicker').forEach(el => {
-    gsap.from(el, {
-      x: -40, opacity: 0, duration: 0.6, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' }
-    });
+    gsap.from(el, { x: -40, opacity: 0, duration: 0.6, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
   gsap.utils.toArray('.section-title').forEach(el => {
-    gsap.from(el, {
-      y: 50, opacity: 0, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' }
-    });
+    gsap.from(el, { y: 50, opacity: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
-
-  // ==========================================
-  // PANEL REVEALS (about, timeline, etc.)
-  // ==========================================
   gsap.utils.toArray('.panel').forEach(panel => {
-    gsap.from(panel, {
-      y: 40, opacity: 0, rotation: gsap.utils.random(-2, 2), scale: 0.97,
+    if (panel.closest('.game-wrap')) return; // skip game panel
+    gsap.from(panel, { y: 40, opacity: 0, rotation: gsap.utils.random(-2, 2), scale: 0.97,
       duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: panel, start: 'top 88%' }
-    });
+      scrollTrigger: { trigger: panel, start: 'top 88%' } });
   });
+  gsap.from('.about-fact', { y: 20, opacity: 0, duration: 0.5, stagger: 0.12, ease: 'back.out(1.7)',
+    scrollTrigger: { trigger: '.about-facts', start: 'top 90%' } });
 
-  // ==========================================
-  // ABOUT FACTS STAGGER
-  // ==========================================
-  gsap.from('.about-fact', {
-    y: 20, opacity: 0, duration: 0.5, stagger: 0.12, ease: 'back.out(1.7)',
-    scrollTrigger: { trigger: '.about-facts', start: 'top 90%' }
-  });
-
-  // ==========================================
-  // EXPERIENCE TIMELINE
-  // ==========================================
+  /* ============ EXPERIENCE TIMELINE ============ */
   gsap.from('.timeline-line', {
-    scaleY: 0, transformOrigin: 'top',
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.timeline',
-      start: 'top 70%',
-      end: 'bottom 40%',
-      scrub: 1
-    }
+    scaleY: 0, transformOrigin: 'top', ease: 'none',
+    scrollTrigger: { trigger: '.timeline', start: 'top 70%', end: 'bottom 40%', scrub: 1 }
   });
-
   gsap.utils.toArray('.timeline-entry').forEach((entry, i) => {
-    const fromX = i % 2 === 0 ? -80 : 80;
-    gsap.from(entry, {
-      x: fromX, opacity: 0, duration: 0.9, ease: 'power3.out',
-      scrollTrigger: { trigger: entry, start: 'top 85%' }
-    });
+    gsap.from(entry, { x: i % 2 === 0 ? -80 : 80, opacity: 0, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: entry, start: 'top 85%' } });
   });
-
   gsap.utils.toArray('.timeline-dot').forEach(dot => {
-    gsap.from(dot, {
-      scale: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)',
-      scrollTrigger: { trigger: dot, start: 'top 85%' }
-    });
+    gsap.from(dot, { scale: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)',
+      scrollTrigger: { trigger: dot, start: 'top 85%' } });
   });
 
-  // ==========================================
-  // PLATFORM CHIPS STAGGER
-  // ==========================================
-  gsap.from('.platform-chip', {
-    y: 20, opacity: 0, duration: 0.4, stagger: 0.1, ease: 'back.out(1.7)',
-    scrollTrigger: { trigger: '.platform-row', start: 'top 88%' }
-  });
+  /* ============ POWERS ============ */
+  gsap.from('.platform-chip', { y: 20, opacity: 0, duration: 0.4, stagger: 0.1, ease: 'back.out(1.7)',
+    scrollTrigger: { trigger: '.platform-row', start: 'top 88%' } });
+  gsap.from('.power', { y: 30, opacity: 0, scale: 0.95, duration: 0.5, stagger: 0.08, ease: 'back.out(1.5)',
+    scrollTrigger: { trigger: '.powers-grid', start: 'top 88%' } });
 
-  // ==========================================
-  // POWERS GRID STAGGER
-  // ==========================================
-  gsap.from('.power', {
-    y: 30, opacity: 0, scale: 0.95, duration: 0.5, stagger: 0.08, ease: 'back.out(1.5)',
-    scrollTrigger: { trigger: '.powers-grid', start: 'top 88%' }
-  });
-
-  // ==========================================
-  // PROJECT ROWS ENTRANCE
-  // ==========================================
+  /* ============ PROJECT ROWS ============ */
   gsap.utils.toArray('.project-row').forEach(row => {
-    const info = row.querySelector('.project-info');
-    const scene = row.querySelector('.mockup-scene');
-
-    gsap.from(info, {
-      x: -60, opacity: 0, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: row, start: 'top 80%' }
-    });
-    gsap.from(scene, {
-      x: 60, opacity: 0, scale: 0.9, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: row, start: 'top 80%' }
-    });
+    gsap.from(row.querySelector('.project-info'), { x: -60, opacity: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: row, start: 'top 80%' } });
+    gsap.from(row.querySelector('.mockup-scene'), { x: 60, opacity: 0, scale: 0.9, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: row, start: 'top 80%' } });
   });
 
-  // ==========================================
-  // 3D PHONE MOCKUP — SCROLL & DRAG
-  // ==========================================
-  const mockups = document.querySelectorAll('[data-mockup]');
-  mockups.forEach(mockup => {
-    let scrollRotY = 0;
-    let dragOffsetY = 0;
-    let isDragging = false;
-    let startX = 0;
-    let startDragOffset = 0;
-    let tiltX = 0;
-
+  /* ============ 3D PHONE MOCKUPS ============ */
+  document.querySelectorAll('[data-mockup]').forEach(mockup => {
+    let scrollRotY = 0, dragOffsetY = 0, isDragging = false;
+    let startX = 0, startDragOffset = 0, tiltX = 0;
     ScrollTrigger.create({
       trigger: mockup.closest('.project-row'),
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 1.5,
+      start: 'top bottom', end: 'bottom top', scrub: 1.5,
       onUpdate: self => {
-        // Invert logic: when progress is 0.5 (center of screen), rotation is 0 (front view)
-        // Scrolls out to -180 (back) and starts from 180 (back)
         scrollRotY = (self.progress - 0.5) * -360;
-        if (!isDragging) {
-          gsap.set(mockup, { rotateY: scrollRotY + dragOffsetY, rotateX: tiltX });
-        }
+        if (!isDragging) gsap.set(mockup, { rotateY: scrollRotY + dragOffsetY, rotateX: tiltX });
       }
     });
-
     const row = mockup.closest('.project-row');
     row.addEventListener('mousemove', e => {
       if (isDragging) return;
       const rect = row.getBoundingClientRect();
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      tiltX = -y * 8;
+      tiltX = -((e.clientY - rect.top) / rect.height - 0.5) * 8;
       gsap.to(mockup, { rotateX: tiltX, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
     });
     row.addEventListener('mouseleave', () => {
@@ -1332,104 +1362,471 @@ footer{text-align:center;padding:34px 20px;font-family:'Kalam';font-weight:700;f
       tiltX = 0;
       gsap.to(mockup, { rotateX: 0, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
     });
-
     mockup.addEventListener('pointerdown', e => {
-      isDragging = true;
-      startX = e.clientX;
-      startDragOffset = dragOffsetY;
-      mockup.setPointerCapture(e.pointerId);
-      mockup.style.cursor = 'grabbing';
-      // removed e.preventDefault() so touch-action: pan-y can handle native vertical scrolling
+      isDragging = true; startX = e.clientX; startDragOffset = dragOffsetY;
+      mockup.setPointerCapture(e.pointerId); mockup.style.cursor = 'grabbing';
     });
-
     mockup.addEventListener('pointermove', e => {
       if (!isDragging) return;
-      const dx = e.clientX - startX;
-      dragOffsetY = startDragOffset + dx * 0.8;
+      dragOffsetY = startDragOffset + (e.clientX - startX) * 0.8;
       gsap.set(mockup, { rotateY: scrollRotY + dragOffsetY, rotateX: tiltX });
     });
-
-    const endDrag = () => {
-      isDragging = false;
-      mockup.style.cursor = 'grab';
-    };
+    const endDrag = () => { isDragging = false; mockup.style.cursor = 'grab'; };
     mockup.addEventListener('pointerup', endDrag);
     mockup.addEventListener('pointercancel', endDrag);
   });
 
-  // ==========================================
-  // FEATURE CARDS STAGGER (Removed to ensure visibility)
-  // ==========================================
-
-  // ==========================================
-  // ACHIEVEMENTS STAGGER (Removed to ensure visibility)
-  // ==========================================
-
-  // ==========================================
-  // STAT COUNTERS (GSAP)
-  // ==========================================
+  /* ============ STATS COUNTERS ============ */
   gsap.utils.toArray('.stat .num').forEach(el => {
     const target = parseInt(el.dataset.count, 10);
     const suffix = el.dataset.suffix || '';
-    if (target === 0) {
-      el.textContent = '0' + suffix;
-      return;
-    }
+    if (target === 0) { el.textContent = '0' + suffix; return; }
     const obj = { val: 0 };
-    gsap.to(obj, {
-      val: target,
-      duration: 2,
-      ease: 'power2.out',
+    gsap.to(obj, { val: target, duration: 2, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 85%' },
-      onUpdate: () => { el.textContent = Math.round(obj.val) + suffix; }
-    });
+      onUpdate: () => { el.textContent = Math.round(obj.val) + suffix; } });
   });
 
-  // ==========================================
-  // SOCIAL CARDS STAGGER
-  // ==========================================
-  gsap.from('.social-card', {
-    y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(1.7)',
-    scrollTrigger: { trigger: '.social-grid', start: 'top 88%' }
-  });
+  /* ============ SOCIAL / CONTACT / FOOTER ============ */
+  gsap.from('.social-card', { y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(1.7)',
+    scrollTrigger: { trigger: '.social-grid', start: 'top 88%' } });
+  gsap.from('.contact-panel', { y: 40, opacity: 0, scale: 0.97, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: '.contact-panel', start: 'top 88%' } });
+  gsap.from('footer', { opacity: 0, duration: 0.6,
+    scrollTrigger: { trigger: 'footer', start: 'top 95%' } });
 
-  // ==========================================
-  // CONTACT PANEL
-  // ==========================================
-  gsap.from('.contact-panel', {
-    y: 40, opacity: 0, scale: 0.97, duration: 0.8, ease: 'power3.out',
-    scrollTrigger: { trigger: '.contact-panel', start: 'top 88%' }
-  });
-
-  // ==========================================
-  // FOOTER
-  // ==========================================
-  gsap.from('footer', {
-    opacity: 0, duration: 0.6,
-    scrollTrigger: { trigger: 'footer', start: 'top 95%' }
-  });
-
-  // ==========================================
-  // GO TO TOP BUTTON
-  // ==========================================
+  /* ============ GO TO TOP ============ */
   const goTopBtn = document.getElementById('goTopBtn');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 600) {
-      goTopBtn.classList.add('show');
-    } else {
-      goTopBtn.classList.remove('show');
-    }
+    goTopBtn.classList.toggle('show', window.scrollY > 600);
   }, { passive: true });
-  if (goTopBtn) {
-    goTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* =====================================================
+     BUG HUNT — comic mini game
+     ===================================================== */
+  if (false) (function bugHunt(){
+    const canvas = document.getElementById('bugCanvas');
+    const ctx = canvas.getContext('2d');
+    const wrap = document.getElementById('gameWrap');
+    const startOverlay = document.getElementById('startOverlay');
+    const overOverlay = document.getElementById('overOverlay');
+    const hudScore = document.getElementById('hudScore');
+    const hudTime = document.getElementById('hudTime');
+    const hudCombo = document.getElementById('hudCombo');
+    const hudLives = document.getElementById('hudLives');
+    const muteBtn = document.getElementById('muteBtn');
+
+    const WORDS = ['SPLAT!', 'POW!', 'BAM!', 'ZAP!', 'SQUISH!', 'BIFF!', 'SPLONK!'];
+    const WORD_COLORS = ['#F5FF3D', '#FF2FA0', '#00E5FF', '#C6FF00', '#FF6B35'];
+    const BUG_TYPES = {
+      grunt:   { color: '#C6FF00', size: 24, speed: 42, hp: 1, score: 10 },
+      speeder: { color: '#FF2FA0', size: 17, speed: 78, hp: 1, score: 20 },
+      tank:    { color: '#FF6B35', size: 34, speed: 30, hp: 2, score: 30 }
+    };
+
+    let W = 0, H = 0, dpr = 1;
+    let state = 'idle'; // idle | playing | over
+    let bugs = [], particles = [], bubbles = [], cracks = [];
+    let score = 0, kills = 0, lives = 3, combo = 1, comboTimer = 0;
+    let timeLeft = 45, elapsed = 0, spawnTimer = 0;
+    let lastFrame = 0, muted = false, best = 0, flashRed = 0, shakeT = 0;
+
+    try { best = parseInt(localStorage.getItem('msk_bug_best') || '0', 10) || 0; } catch (e) { best = 0; }
+    document.getElementById('bestStart').textContent = 'BEST SCORE: ' + best;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    /* ---- sound (tiny WebAudio synth) ---- */
+    let audioCtx = null;
+    function ac() {
+      if (!audioCtx) { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+    function blip(freq, dur, type, vol, delay) {
+      if (muted) return;
+      const c = ac(); if (!c) return;
+      const t = c.currentTime + (delay || 0);
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = type || 'square'; o.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(vol || 0.1, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.connect(g); g.connect(c.destination);
+      o.start(t); o.stop(t + dur);
+    }
+    const sfx = {
+      squash: () => { blip(320 + Math.random() * 180, 0.09, 'square', 0.12); blip(140, 0.12, 'triangle', 0.1, 0.02); },
+      hurt:   () => { blip(130, 0.35, 'sawtooth', 0.15); blip(90, 0.3, 'sawtooth', 0.12, 0.08); },
+      start:  () => { blip(440, 0.1, 'square', 0.1); blip(660, 0.12, 'square', 0.1, 0.1); blip(880, 0.15, 'square', 0.1, 0.2); },
+      over:   () => { blip(520, 0.15, 'triangle', 0.12); blip(390, 0.15, 'triangle', 0.12, 0.15); blip(260, 0.3, 'triangle', 0.12, 0.3); },
+      tick:   () => blip(880, 0.05, 'square', 0.06)
+    };
+    muteBtn.addEventListener('click', () => {
+      muted = !muted;
+      muteBtn.textContent = muted ? '🔇' : '🔊';
     });
-  }
 
-  // Force recalculation of triggers once everything is set
+    /* ---- game control ---- */
+    function reset() {
+      bugs = []; particles = []; bubbles = []; cracks = [];
+      score = 0; kills = 0; lives = 3; combo = 1; comboTimer = 0;
+      timeLeft = 45; elapsed = 0; spawnTimer = 600; flashRed = 0;
+      updateHud();
+    }
+    function start() {
+      reset();
+      state = 'playing';
+      startOverlay.classList.add('hidden');
+      overOverlay.classList.add('hidden');
+      sfx.start();
+    }
+    function end() {
+      state = 'over';
+      const won = lives > 0;
+      if (score > best) { best = score; try { localStorage.setItem('msk_bug_best', String(best)); } catch (e) {} }
+      document.getElementById('overTitle').textContent = won ? 'BUILD SAVED!' : 'BUILD CRASHED!';
+      document.getElementById('overTitle').style.color = won ? '#C6FF00' : '#FF2FA0';
+      document.getElementById('finalScore').textContent = score;
+      document.getElementById('finalKills').textContent = kills;
+      document.getElementById('finalBest').textContent = best;
+      const quips = won
+        ? ['The build compiles. The bugs? History.', 'Ship it! Zero regressions on this hero.', 'Clean Architecture, cleaner extermination.']
+        : ['The bugs won this round. Flutter hot-restart and go again!', 'Segmentation fault of the soul. Retry?', 'Even heroes need a second draft.'];
+      document.getElementById('overQuip').textContent = quips[Math.floor(Math.random() * quips.length)];
+      document.getElementById('bestStart').textContent = 'BEST SCORE: ' + best;
+      overOverlay.classList.remove('hidden');
+      sfx.over();
+    }
+    document.getElementById('startBtn').addEventListener('click', start);
+    document.getElementById('restartBtn').addEventListener('click', start);
+    window.addEventListener('keydown', e => {
+      if ((e.key === ' ' || e.key === 'Enter') && state !== 'playing' && isInView()) {
+        e.preventDefault(); start();
+      }
+    });
+    function isInView() {
+      const r = wrap.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    }
+
+    /* ---- spawning ---- */
+    function spawnBug() {
+      const roll = Math.random();
+      const type = roll < 0.55 ? 'grunt' : (roll < 0.82 ? 'speeder' : 'tank');
+      const cfg = BUG_TYPES[type];
+      // spawn on edges
+      const side = Math.floor(Math.random() * 4);
+      let x, y;
+      const m = 30;
+      if (side === 0) { x = Math.random() * W; y = -m; }
+      else if (side === 1) { x = W + m; y = Math.random() * H; }
+      else if (side === 2) { x = Math.random() * W; y = H + m; }
+      else { x = -m; y = Math.random() * H; }
+      const ramp = 1 + elapsed / 45000; // speeds up over time
+      bugs.push({
+        x, y, type, hp: cfg.hp, size: cfg.size, color: cfg.color,
+        speed: cfg.speed * ramp * (0.85 + Math.random() * 0.3),
+        score: cfg.score, angle: 0, seed: Math.random() * 10,
+        squish: 0, dead: false
+      });
+    }
+
+    /* ---- input ---- */
+    function pointerPos(e) {
+      const r = canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+    function trySquash(x, y) {
+      if (state !== 'playing') return;
+      let hit = false;
+      for (const b of bugs) {
+        if (b.dead) continue;
+        const dx = b.x - x, dy = b.y - y;
+        if (dx * dx + dy * dy < (b.size + 18) * (b.size + 18)) {
+          b.hp--; hit = true;
+          if (b.hp <= 0) {
+            b.dead = true; b.squish = 1;
+            kills++;
+            score += b.score * combo;
+            combo = Math.min(combo + 1, 5); comboTimer = 1500;
+            spawnSplat(b.x, b.y, b.color, b.size);
+            spawnBubble(b.x, b.y);
+            sfx.squash();
+          } else {
+            // tank takes a hit — knockback + flash
+            b.x += (b.x - x) * 0.15; b.y += (b.y - y) * 0.15;
+            spawnSplat(x, y, '#FFFFFF', 12);
+            sfx.squash();
+          }
+          updateHud();
+          break;
+        }
+      }
+      if (!hit) { combo = 1; updateHud(); }
+    }
+    let smashing = false;
+    canvas.addEventListener('pointerdown', e => { smashing = true; const p = pointerPos(e); trySquash(p.x, p.y); });
+    canvas.addEventListener('pointermove', e => { if (smashing) { const p = pointerPos(e); trySquash(p.x, p.y); } });
+    window.addEventListener('pointerup', () => { smashing = false; });
+
+    /* ---- effects ---- */
+    function spawnSplat(x, y, color, size) {
+      const n = 12 + Math.floor(Math.random() * 6);
+      for (let i = 0; i < n; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const sp = 1.5 + Math.random() * 4;
+        particles.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1,
+          r: 2 + Math.random() * (size / 6), color, life: 1 });
+      }
+    }
+    function spawnBubble(x, y) {
+      bubbles.push({
+        x: x + (Math.random() * 40 - 20), y: y - 20,
+        text: WORDS[Math.floor(Math.random() * WORDS.length)],
+        color: WORD_COLORS[Math.floor(Math.random() * WORDS.length)],
+        rot: (Math.random() * 24 - 12) * Math.PI / 180,
+        life: 1
+      });
+    }
+
+    /* ---- hud ---- */
+    function updateHud() {
+      hudScore.textContent = score;
+      hudTime.textContent = Math.max(0, Math.ceil(timeLeft / 1000));
+      hudCombo.textContent = 'x' + combo;
+      hudCombo.classList.toggle('combo-hot', combo >= 3);
+      hudLives.textContent = '♥'.repeat(lives) + '♡'.repeat(Math.max(0, 3 - lives));
+    }
+
+    /* ---- drawing ---- */
+    function drawCenter(t) {
+      const cx = W / 2, cy = H / 2 + 16;
+      const pulse = 1 + Math.sin(t / 350) * 0.03;
+      const rw = 190 * pulse, rh = 120 * pulse;
+      // glow
+      const g = ctx.createRadialGradient(cx, cy, 10, cx, cy, 200);
+      g.addColorStop(0, 'rgba(198,255,0,0.16)');
+      g.addColorStop(1, 'rgba(198,255,0,0)');
+      ctx.fillStyle = g; ctx.fillRect(cx - 200, cy - 200, 400, 400);
+      // terminal body
+      ctx.save();
+      ctx.translate(cx, cy);
+      if (shakeT > 0) ctx.translate((Math.random() - 0.5) * shakeT, (Math.random() - 0.5) * shakeT);
+      ctx.fillStyle = '#0A0A0A';
+      ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 3;
+      roundRect(-rw / 2, -rh / 2, rw, rh, 8); ctx.fill(); ctx.stroke();
+      // header bar
+      ctx.fillStyle = '#FF2FA0';
+      roundRect(-rw / 2 + 6, -rh / 2 + 6, rw - 12, 16, 4); ctx.fill();
+      // code lines
+      ctx.fillStyle = '#C6FF00';
+      for (let i = 0; i < 3; i++) {
+        const wLine = (rw - 40) * (0.5 + 0.4 * Math.abs(Math.sin(t / 500 + i * 2)));
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(-rw / 2 + 14, -rh / 2 + 30 + i * 16, wLine, 5);
+      }
+      ctx.globalAlpha = 1;
+      // cracks
+      ctx.strokeStyle = '#FF2FA0'; ctx.lineWidth = 2;
+      cracks.forEach(c => {
+        ctx.globalAlpha = Math.max(0, c.life);
+        ctx.beginPath();
+        ctx.moveTo(c.x, c.y);
+        ctx.lineTo(c.x + c.dx * 14, c.y + c.dy * 14);
+        ctx.lineTo(c.x + c.dx * 22 + c.dy * 8, c.y + c.dy * 22 + c.dx * 6);
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+      // label
+      ctx.fillStyle = '#F5FF3D';
+      ctx.font = '700 11px "Work Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('PRODUCTION BUILD', 0, rh / 2 + 18);
+      ctx.restore();
+    }
+    function roundRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+    function drawBug(b, t) {
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.rotate(b.angle);
+      if (b.squish > 0) ctx.scale(1 + b.squish * 0.6, Math.max(0.05, 1 - b.squish));
+      const s = b.size;
+      // shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.3)';
+      ctx.beginPath(); ctx.ellipse(2, 4, s, s * 0.72, 0, 0, 7); ctx.fill();
+      // legs
+      ctx.strokeStyle = '#0A0A0A'; ctx.lineWidth = Math.max(2, s * 0.09); ctx.lineCap = 'round';
+      for (let i = -1; i <= 1; i++) {
+        const ph = Math.sin(t / 90 * (b.speed / 30) + i * 2 + b.seed);
+        ctx.beginPath(); ctx.moveTo(-s * 0.2, i * s * 0.32);
+        ctx.lineTo(-s * 0.85, i * s * 0.5 + ph * s * 0.26); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(s * 0.2, i * s * 0.32);
+        ctx.lineTo(s * 0.85, i * s * 0.5 - ph * s * 0.26); ctx.stroke();
+      }
+      // body
+      ctx.fillStyle = b.color;
+      ctx.lineWidth = Math.max(2.5, s * 0.1);
+      ctx.beginPath(); ctx.ellipse(0, 0, s, s * 0.72, 0, 0, 7); ctx.fill(); ctx.stroke();
+      // wing-case split
+      ctx.beginPath(); ctx.moveTo(s * 0.6, 0); ctx.lineTo(-s * 0.72, 0); ctx.stroke();
+      // head
+      ctx.beginPath(); ctx.arc(s * 0.88, 0, s * 0.42, 0, 7); ctx.fill(); ctx.stroke();
+      // eyes
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath(); ctx.arc(s * 0.98, -s * 0.15, s * 0.14, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.arc(s * 0.98, s * 0.15, s * 0.14, 0, 7); ctx.fill();
+      ctx.fillStyle = '#0A0A0A';
+      ctx.beginPath(); ctx.arc(s * 1.04, -s * 0.13, s * 0.06, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.arc(s * 1.04, s * 0.13, s * 0.06, 0, 7); ctx.fill();
+      // angry brows
+      ctx.lineWidth = Math.max(2, s * 0.08);
+      ctx.beginPath(); ctx.moveTo(s * 0.8, -s * 0.36); ctx.lineTo(s * 1.1, -s * 0.22); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s * 0.8, s * 0.36); ctx.lineTo(s * 1.1, s * 0.22); ctx.stroke();
+      ctx.restore();
+    }
+    function drawBubble(b) {
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.rotate(b.rot);
+      ctx.scale(1 + (1 - b.life) * 0.15, 1 + (1 - b.life) * 0.15);
+      ctx.globalAlpha = Math.min(1, b.life * 2);
+      ctx.font = '700 26px Bangers, cursive';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const w = ctx.measureText(b.text).width + 26;
+      const h = 38;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.strokeStyle = '#0A0A0A'; ctx.lineWidth = 3;
+      roundRect(-w / 2, -h / 2, w, h, 12); ctx.fill(); ctx.stroke();
+      ctx.lineWidth = 5; ctx.strokeStyle = '#0A0A0A';
+      ctx.strokeText(b.text, 0, 2);
+      ctx.fillStyle = b.color;
+      ctx.fillText(b.text, 0, 2);
+      ctx.restore();
+      ctx.globalAlpha = 1;
+    }
+
+    /* ---- main loop (delta-time based) ---- */
+    function frame(now) {
+      const dt = Math.min(50, now - (lastFrame || now)); lastFrame = now;
+      const t = now;
+      ctx.clearRect(0, 0, W, H);
+
+      // background halftone
+      ctx.fillStyle = 'rgba(255,255,255,0.035)';
+      for (let y = 10; y < H; y += 26) {
+        for (let x = 10 + ((y / 26) % 2) * 13; x < W; x += 26) {
+          ctx.beginPath(); ctx.arc(x, y, 1.6, 0, 7); ctx.fill();
+        }
+      }
+      drawCenter(t);
+
+      if (state === 'playing') {
+        elapsed += dt;
+        timeLeft -= dt;
+        if (comboTimer > 0) { comboTimer -= dt; if (comboTimer <= 0) { combo = 1; updateHud(); } }
+        if (flashRed > 0) flashRed -= dt;
+        if (shakeT > 0) shakeT = Math.max(0, shakeT - dt * 0.05);
+
+        // spawn
+        spawnTimer -= dt;
+        if (spawnTimer <= 0) {
+          spawnBug();
+          const base = Math.max(340, 1100 - elapsed / 60);
+          spawnTimer = base * (0.7 + Math.random() * 0.6);
+        }
+        // move bugs toward center
+        const cx = W / 2, cy = H / 2 + 16;
+        for (const b of bugs) {
+          if (b.dead) { b.squish += dt / 140; continue; }
+          const dx = cx - b.x, dy = cy - b.y;
+          const dist = Math.hypot(dx, dy) || 1;
+          b.angle = Math.atan2(dy, dx);
+          b.x += (dx / dist) * b.speed * dt / 1000;
+          b.y += (dy / dist) * b.speed * dt / 1000;
+          // wobble
+          b.x += Math.cos(t / 300 + b.seed) * 0.25;
+          b.y += Math.sin(t / 300 + b.seed) * 0.25;
+          if (dist < 92) {
+            b.dead = true; b.squish = 99; // remove without splat reward
+            lives--; combo = 1; flashRed = 260; shakeT = 8;
+            for (let i = 0; i < 4; i++) {
+              cracks.push({ x: (Math.random() - 0.5) * 120, y: (Math.random() - 0.5) * 60,
+                dx: Math.random() * 2 - 1, dy: Math.random() * 2 - 1, life: 1 });
+            }
+            sfx.hurt();
+            updateHud();
+            if (navigator.vibrate) { try { navigator.vibrate(60); } catch (e) {} }
+          }
+        }
+        bugs = bugs.filter(b => b.squish < 1);
+        cracks.forEach(c => c.life -= dt / 4000);
+        cracks = cracks.filter(c => c.life > 0);
+
+        if (timeLeft <= 0 || lives <= 0) end();
+      }
+
+      // draw bugs
+      bugs.forEach(b => { if (!b.dead || b.squish < 1) drawBug(b, t); });
+
+      // particles
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life -= dt / 700;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(0.5, p.r * p.life), 0, 7); ctx.fill();
+      });
+      particles = particles.filter(p => p.life > 0);
+      ctx.globalAlpha = 1;
+
+      // comic bubbles
+      bubbles.forEach(b => { b.y -= dt / 40; b.life -= dt / 900; });
+      bubbles = bubbles.filter(b => b.life > 0);
+      bubbles.forEach(drawBubble);
+
+      // red damage flash
+      if (flashRed > 0) {
+        ctx.fillStyle = 'rgba(255,47,160,' + Math.min(0.35, flashRed / 900) + ')';
+        ctx.fillRect(0, 0, W, H);
+      }
+      // last 5 seconds urgency tint
+      if (state === 'playing' && timeLeft < 5000) {
+        ctx.fillStyle = 'rgba(255,111,53,' + (0.06 + 0.05 * Math.sin(t / 120)) + ')';
+        ctx.fillRect(0, 0, W, H);
+        if (Math.ceil(timeLeft / 1000) !== Math.ceil((timeLeft + dt) / 1000)) { sfx.tick(); updateHud(); }
+      } else if (state === 'playing') {
+        hudTime.textContent = Math.max(0, Math.ceil(timeLeft / 1000));
+      }
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    // idle attract screen: a couple of wandering bugs behind the start overlay
+    setInterval(() => {
+      if (state === 'idle' && bugs.length < 3) spawnBug();
+    }, 1800);
+  })();
+
   setTimeout(() => ScrollTrigger.refresh(), 100);
-
 })();
 </script>
+<script src="leaderboard-config.js" defer></script>
+<script src="game.js" defer></script>
 </body>
 </html>

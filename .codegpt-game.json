@@ -1,0 +1,17 @@
+{
+  "engine": "generic",
+  "launch": {
+    "cmd": "python",
+    "args": [
+      "-m",
+      "http.server",
+      "8765"
+    ]
+  },
+  "log": {
+    "stdout": true
+  },
+  "sourceRoots": [
+    "."
+  ]
+}
